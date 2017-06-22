@@ -1,0 +1,162 @@
+<html>
+    <head>
+        <title>AnonyChat</title>
+        <!--Import Google Icon Font-->
+        <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <!--Import materialize.css-->
+        <link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css"  media="screen,projection"/>
+        <link type="text/css" rel="stylesheet" href="style.css" />
+
+        <!--Let browser know website is optimized for mobile-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+        <!--Import jQuery before materialize.js-->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+        <script>
+            
+            <!-- global -->
+            var connection;
+            var id;
+            var gender;
+            
+            function rec()
+            {
+                connection.send(id+'!'+gender+'!rec!');
+                setTimeout(rec, 1000);
+            }
+            
+            $(document).ready(function(){
+                $(".button-collapse").sideNav(); 
+                $('.tooltipped').tooltip({delay: 50});
+                
+                
+                <!-- WEBSOCKET -->  
+            
+                gender = getUrlParameter('gender');
+                gender = gender.split('"')[0];
+                var d = new Date();
+                id = '' + d.getDate() + d.getHours() + d.getMinutes() + d.getSeconds() + d.getMilliseconds() + Math.floor((Math.random() * 9999) + 1);   
+
+
+                var HOST = location.origin.replace(/^http/, 'ws')
+                var ws = new WebSocket(HOST);
+                var el = document.getElementById('server-time');
+
+                ws.onopen = function () {
+                    // connection is opened and ready to use
+                        //Materialize.toast(("Connesso"), (1000 * 3600 * 5))                                        
+                        connection.send(id+'!'+gender+'!conn!');                         
+                        setTimeout(rec, 1000);
+                    };
+
+                ws.onmessage = function (event) {
+                    //el.innerHTML = 'Server time: ' + event.data;
+                    if (event.data.split('!')[1] == 'conn') {
+                            Materialize.toast((event.data.split('!')[1]), (1000 * 3600 * 5));
+                            id=event.data.split('!')[0];
+                        }
+                        if (event.data.split('!')[1] == 'err') {
+                            //Materialize.toast((data.data.split('!')[1]), (1000 * 3600 * 5));
+                            id=event.data.split('!')[0];
+                        }
+                        if(event.data.split('!')[1] == 'mess')
+                        {
+                            //Materialize.toast((data.data.split('!')[1]), (1000 * 3600 * 5));
+                            $('#my_page').append('<div class="my_row"><div class="msg_rec"><span>' + event.data.split('!')[3] + '</span></div></div>');
+                        }
+                };
+
+                ws.onerror = function (error) {
+                        // an error occurred when sending/receiving data
+                        Materialize.toast(("Errore di connesione"), (1000 * 3600 * 5));
+                    };              
+                    
+            });
+            
+            <!-- GET PARAM -->
+            var getUrlParameter = function getUrlParameter(sParam) 
+            {
+                var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+                sURLVariables = sPageURL.split('&'),
+                sParameterName,
+                i;
+
+                for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
+
+                if (sParameterName[0] === sParam) {
+                return sParameterName[1] === undefined ? true : sParameterName[1];
+                }
+                }
+            };
+        
+            
+            function send()
+            {
+                var message = $("#my_message").val(); 
+                $('#my_page').append('<div class="my_row"><div class="msg_send"><span>' + message + '</span></div></div>');
+                connection.send(id+'!'+gender+'!mess!'+message+'!');
+            }
+            
+            
+        </script>
+        <!-- FINE WEBSOCKET -->
+    </head>
+    <body>
+        <!-- NAV BAR -->
+        <nav>
+            <div class="teal darken-2 nav-wrapper">
+                <a href="#" class="brand-logo center">AnonyChat</a>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="download.html">Download</a></li>
+                </ul>
+            </div>
+        </nav>
+        
+        <!-- MAIN -->
+        <div id="main">
+            <div id="my_page">
+                  
+            </div>    
+            <div class="row my_textarea">
+                <form class="col s12">
+                    <div class="row my_text">
+                        <div class="input-field col s12">
+                            <textarea id="my_message" class="materialize-textarea"></textarea>
+                            <label for="textarea1">Textarea</label>
+                        </div>
+                    </div>                    
+                    <a class="right btn-floating btn-large waves-effect waves-light red my_float"><i class="material-icons" onclick="send();">send</i></a>        
+                </form>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <footer id="footer" class="teal darken-2 page-footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col l6 s12">
+                        <h5 class="white-text">AnonyChat</h5>
+                        <p class="grey-text text-lighten-4">AnonyChat is a platform which allow you to chat anonymously with strangers for free</p>
+                    </div>
+                    <div class="col l4 offset-l2 s12">
+                        <h5 class="white-text">Links</h5>
+                        <ul>
+                            <li><a class="grey-text text-lighten-3" href="#!">PlayStore</a></li>
+                            <li><a class="grey-text text-lighten-3" href="#!">Site</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-copyright">
+                <div class="container">
+                    &copy; 2017 Smarket, All rights reserved
+                    <span class="right">Made with <i class="tiny material-icons materialize-red-text text-lighten-3 mdi-action-favorite">favorite</i> in Italy</span>
+                </div>
+            </div>
+        </footer>        
+    </body>
+</html>

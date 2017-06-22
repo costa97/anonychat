@@ -1,0 +1,126 @@
+@font-face {
+    font-family: 'Moon Light';
+    src: url('font/Moon Light.otf') format('truetype');
+}
+
+body{
+    background-image: url(img/background.jpeg);
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    font-family: 'Moon Light';    
+}
+
+main{
+    flex: 1 0 auto;    
+}
+#main{
+    height: auto;
+    margin-bottom: 500px;
+    min-width: 800px;
+}
+
+#footer{
+    float: left;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin-top: 200px;
+}
+
+.my_container{
+    width: 40%;
+    height: auto;
+    min-height: 260px;
+    margin: auto;
+    margin-top: 150px;
+    background-color: white;
+    border-radius: 3px;
+    text-align: center;
+}
+
+.my_title{
+    float: left;
+    font-size: 35px;
+    width: 100%;
+    margin: auto;
+    margin-top: 30px;
+}
+
+.my_gender{
+    margin-top: 30px;
+    margin-left: 20px;
+    margin-right: 20px;  
+}
+
+.btn-floating.btn-large{
+    width: 80px;
+    height: 80px;
+}
+
+.btn-floating.btn-large i{
+    line-height: 80px;
+}
+
+.msg_rec{
+    float: left;
+    max-width: 50%;
+    width: auto;
+    height: auto;
+    min-height: 20px;
+    background-color: #e0f2f1;
+    margin-top: 50px;
+    margin-right: 100px;
+    padding: 10px;
+}
+
+.msg_send{
+    float: right;
+    max-width: 50%;
+    width: auto;
+    height: auto;
+    min-height: 20px;
+    background-color: #e0f2f1;
+    margin-top: 50px;
+    margin-left: 100px;
+    padding: 10px;
+}
+
+#my_page{
+    width: 90%;
+    height: auto;
+    margin: auto;
+}
+
+.my_row{
+    width: 100%;
+    margin: auto;
+    height: auto;
+    float: left;
+}
+
+.my_textarea{
+    position: fixed;
+    float: left;
+    left: 2%;
+    right: 2%;
+    bottom: 200px;
+    margin-bottom: 50px;
+    background-color: #b2dfdb;
+    border-radius: 3px;
+    min-width: 800px;
+}
+
+.my_text{
+    width: 90%;
+    float: left;
+}
+
+.my_float{
+    width: 10%;
+    position:fixed; 
+    float: right;
+    bottom: 250px;
+    margin-bottom: 50px;
+}
