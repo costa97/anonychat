@@ -5,7 +5,7 @@ const SocketServer = require('ws').Server;
 const path = require('path');
 
 const PORT = process.env.PORT;
-const INDEX = path.join(__dirname, 'http://anonychat.altervista.org/index.html');
+const INDEX = path.join(__dirname, '../');
 
 require('crypto');
 require('js-sha256');
