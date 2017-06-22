@@ -36,12 +36,12 @@ wss.on('connection', (ws) => {
                         if(female.length==0)
                         {
                             male.push(hash);		
-                            ws.send(hash + '!err!');        
+                            client.send(hash + '!err!');        
                         }
                         else
                         {
                             hash = female[female.length-1];    
-                            ws.send(hash+'!conn!');   
+                            client.send(hash+'!conn!');   
                             female.pop(female.length-1);
                         }            
                     }
@@ -52,13 +52,13 @@ wss.on('connection', (ws) => {
                         if(male.length==0)
                         {
                             female.push(hash);		
-                            ws.send(hash + '!err!');        
+                            client.send(hash + '!err!');        
                         }
                         else
                         {
                             hash = male[male.length-1];    
                             console.log('new id: ' + hash);
-                            ws.send(hash+'!conn!');        
+                            client.send(hash+'!conn!');        
                         }            
                     }        
                 }
@@ -81,7 +81,7 @@ wss.on('connection', (ws) => {
                     }
                     if(ind != "null")
                     {
-                        ws.send(''+last_message[ind].id+'!mess!'+message.split('!')[1]+'!'+last_message[ind].mess+'!');
+                        client.send(''+last_message[ind].id+'!mess!'+message.split('!')[1]+'!'+last_message[ind].mess+'!');
                         last_message.pop(ind);    
                     }                    
                 }
