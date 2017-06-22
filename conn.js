@@ -15,6 +15,11 @@ http.createServer(function(request, response) {
     response.end("Hello world\n")
 }).listen(process.env.PORT)
 
+//CREATE THE WEBSOCKET SERVER
+wsServer = new WebSocketServer({
+    httpServer: server
+});
+
 //CREATE THE SOCKET SERVER
 // WEBSOCKET SERVER
     wsServer.on('request', function(request) {
