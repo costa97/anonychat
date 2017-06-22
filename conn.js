@@ -4,7 +4,7 @@ const express = require('express');
 const SocketServer = require('ws').Server;
 const path = require('path');
 
-const PORT = process.env.OPENSHIFT_NODEJS_PORT || 8080;
+const PORT = process.env.OPENSHIFT_NODEJS_PORT || 50000;
 const INDEX = path.join(__dirname, '/');
 
 require('crypto');
