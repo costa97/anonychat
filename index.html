@@ -1,14 +1,70 @@
-
 <html>
-  <body>
-    <p id='server-time'></p>
-    <script>
-      var HOST = location.origin.replace(/^http/, 'ws')
-      var ws = new WebSocket(HOST);
-      var el = document.getElementById('server-time');
-      ws.onmessage = function (event) {
-        el.innerHTML = 'Server time: ' + event.data;
-      };
-    </script>
-  </body>
+    <head>
+        <title>AnonyChat</title>
+        <!--Import Google Icon Font-->
+        <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <!--Import materialize.css-->
+        <link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css"  media="screen,projection"/>
+        <link type="text/css" rel="stylesheet" href="style.css" />
+
+        <!--Let browser know website is optimized for mobile-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+        <!--Import jQuery before materialize.js-->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+        <script>
+            $(document).ready(function(){
+                $(".button-collapse").sideNav(); 
+                $('.tooltipped').tooltip({delay: 50});
+            });
+        </script>
+    </head>
+    <body>
+        <!-- NAV BAR -->
+        <nav>
+            <div class="teal darken-2 nav-wrapper">
+                <a href="#" class="brand-logo center">AnonyChat</a>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="download.html">Download</a></li>
+                </ul>
+            </div>
+        </nav>
+        
+        <!-- MAIN -->
+        <div id="main">
+            <div class="teal lighten-5 my_container">
+                <h1 class="teal-text text-darken-4 my_title">Start chatting with strangers!</h1>                  
+                    <a href="chat.html?gender=female" class="btn-floating btn-large waves-effect waves-light blue btn tooltipped my_gender" data-position="bottom" data-delay="50" data-tooltip="Chat with male"><i class="material-icons">person</i></a>        
+                    <a href="chat.html?gender=male" class="btn-floating btn-large waves-effect waves-light pink btn tooltipped my_gender" data-position="bottom" data-delay="50" data-tooltip="Chat with female"><i class="material-icons">person</i></a>        
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <footer id="footer" class="teal darken-2 page-footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col l6 s12">
+                        <h5 class="white-text">AnonyChat</h5>
+                        <p class="grey-text text-lighten-4">AnonyChat is a platform which allow you to chat anonymously with strangers for free</p>
+                    </div>
+                    <div class="col l4 offset-l2 s12">
+                        <h5 class="white-text">Links</h5>
+                        <ul>
+                            <li><a class="grey-text text-lighten-3" href="#!">PlayStore</a></li>
+                            <li><a class="grey-text text-lighten-3" href="#!">Site</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-copyright">
+                <div class="container">
+                    &copy; 2017 Smarket, All rights reserved
+                    <span class="right">Made with <i class="tiny material-icons materialize-red-text text-lighten-3 mdi-action-favorite">favorite</i> in Italy</span>
+                </div>
+            </div>
+        </footer>        
+    </body>
 </html>
