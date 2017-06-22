@@ -5,7 +5,7 @@ const SocketServer = require('ws').Server;
 const path = require('path');
 
 const PORT = process.env.PORT || 3000;
-const INDEX = path.join(__dirname, 'index.html');
+const INDEX = path.join(__dirname, './');
 
 var risp = "undefined";
 var female = [];
@@ -13,7 +13,8 @@ var male = [];
 var last_message = [];
 
 const server = express()
-  //.use((req, res) => res.sendFile(INDEX) )
+  .use((req, res) => res.sendFile(INDEX) )
+  .use((req, res) => res.sendFile('materialize') )
   .listen(PORT, () => console.log(`Listening on ${ PORT }`));
 
 const wss = new SocketServer({ server });
