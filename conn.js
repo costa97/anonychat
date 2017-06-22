@@ -4,7 +4,7 @@ const express = require('express');
 const SocketServer = require('ws').Server;
 const path = require('path');
 
-const PORT = process.env.PORT || 34366;
+const PORT = 34366;
 const INDEX = path.join(__dirname, '/');
 
 require('crypto');
