@@ -1,5 +1,5 @@
 {
-  "name": "anonychat",
+  "name": "myserverchat",
   "version": "1.0.0",
   "description": "bello alto",
   "main": "conn.js",
@@ -12,7 +12,7 @@
   "devDependencies": {},
   "scripts": {
     "test": "node conn.js",
-	"start":"node conn.js"
+    "start": "node conn.js"
   },
   "author": "",
   "license": "ISC"
