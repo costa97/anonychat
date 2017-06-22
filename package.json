@@ -4,10 +4,13 @@
   "description": "bello alto",
   "main": "conn.js",
   "dependencies": {
+    "bufferutil": "3.0.1",
     "hash.js": "^1.1.1",
     "js-sha256": "^0.5.0",
     "split": "^1.0.0",
-    "websocket": "^1.0.24"
+    "utf-8-validate": "3.0.2",
+    "websocket": "^1.0.24",
+    "ws": "3.0.0"
   },
   "devDependencies": {},
   "scripts": {
