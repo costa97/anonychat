@@ -4,8 +4,13 @@ const express = require('express');
 const SocketServer = require('ws').Server;
 const path = require('path');
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8888;
 const INDEX = path.join(__dirname, '/');
+
+require('crypto');
+require('js-sha256');
+require('hash.js');
+var sha256 = require('js-sha256')
 
 var risp = "undefined";
 var female = [];
@@ -23,9 +28,7 @@ wss.on('connection', (ws) => {
   ws.on('close', () => console.log('Client disconnected'));
 
   ws.on('message', function(message) {
-        if (message.type === 'utf8') {
                 // process WebSocket message
-                message = (message.utf8Data+"");
                 console.log(message);
                 if(message.split('!')[2]=='conn')
                 {
@@ -36,12 +39,12 @@ wss.on('connection', (ws) => {
                         if(female.length==0)
                         {
                             male.push(hash);		
-                            client.send(hash + '!err!');        
+                            ws.send(hash + '!err!');        
                         }
                         else
                         {
                             hash = female[female.length-1];    
-                            client.send(hash+'!conn!');   
+                            ws.send(hash+'!conn!');   
                             female.pop(female.length-1);
                         }            
                     }
@@ -52,13 +55,13 @@ wss.on('connection', (ws) => {
                         if(male.length==0)
                         {
                             female.push(hash);		
-                            client.send(hash + '!err!');        
+                            ws.send(hash + '!err!');        
                         }
                         else
                         {
                             hash = male[male.length-1];    
                             console.log('new id: ' + hash);
-                            client.send(hash+'!conn!');        
+                            ws.send(hash+'!conn!');        
                         }            
                     }        
                 }
@@ -81,19 +84,14 @@ wss.on('connection', (ws) => {
                     }
                     if(ind != "null")
                     {
-                        client.send(''+last_message[ind].id+'!mess!'+message.split('!')[1]+'!'+last_message[ind].mess+'!');
+                        ws.send(''+last_message[ind].id+'!mess!'+message.split('!')[1]+'!'+last_message[ind].mess+'!');
                         last_message.pop(ind);    
                     }                    
-                }
-        }
-		
+                }		
 	});
 
 });
 
-setInterval(() => {
-  wss.clients.forEach((client) => {
-    client.send(new Date().toTimeString());
-  });
-}, 1000);
+
+
 
