@@ -1,34 +1,28 @@
-require('crypto');
-require('js-sha256');
-require('hash.js');
-var sha256 = require('js-sha256');
-//WEBSOCKET TO JAVASCRIPT
-var WebSocketServer = require('websocket').server;
-var http = require('http');
+'use strict';
+
+const express = require('express');
+const SocketServer = require('ws').Server;
+const path = require('path');
+
+const PORT = process.env.PORT || 3000;
+const INDEX = path.join(__dirname, 'index.html');
+
 var risp = "undefined";
 var female = [];
 var male = [];
 var last_message = [];
 
-http.createServer(function(request, response) {
-    // process HTTP request. Since we're writing just WebSockets server
-    // we don't have to implement anything.
-}).listen(process.env.PORT)
+const server = express()
+  .use((req, res) => res.sendFile(INDEX) )
+  .listen(PORT, () => console.log(`Listening on ${ PORT }`));
 
-//CREATE THE WEBSOCKET SERVER
-wsServer = new WebSocketServer({
-    httpServer: server
-});
+const wss = new SocketServer({ server });
 
-//CREATE THE SOCKET SERVER
-// WEBSOCKET SERVER
-    wsServer.on('request', function(request) {
-    var connection = request.accept(null, request.origin);
-    console.log('connected...');
-    // This is the most important callback for us, we'll handle
-    // all messages from users here.
+wss.on('connection', (ws) => {
+  console.log('Client connected');
+  ws.on('close', () => console.log('Client disconnected'));
 
-	connection.on('message', function(message) {
+  ws.on('message', function(message) {
         if (message.type === 'utf8') {
                 // process WebSocket message
                 message = (message.utf8Data+"");
@@ -42,12 +36,12 @@ wsServer = new WebSocketServer({
                         if(female.length==0)
                         {
                             male.push(hash);		
-                            connection.send(hash + '!err!');        
+                            ws.send(hash + '!err!');        
                         }
                         else
                         {
                             hash = female[female.length-1];    
-                            connection.send(hash+'!conn!');   
+                            ws.send(hash+'!conn!');   
                             female.pop(female.length-1);
                         }            
                     }
@@ -58,13 +52,13 @@ wsServer = new WebSocketServer({
                         if(male.length==0)
                         {
                             female.push(hash);		
-                            connection.send(hash + '!err!');        
+                            ws.send(hash + '!err!');        
                         }
                         else
                         {
                             hash = male[male.length-1];    
                             console.log('new id: ' + hash);
-                            connection.send(hash+'!conn!');        
+                            ws.send(hash+'!conn!');        
                         }            
                     }        
                 }
@@ -87,7 +81,7 @@ wsServer = new WebSocketServer({
                     }
                     if(ind != "null")
                     {
-                        connection.send(''+last_message[ind].id+'!mess!'+message.split('!')[1]+'!'+last_message[ind].mess+'!');
+                        ws.send(''+last_message[ind].id+'!mess!'+message.split('!')[1]+'!'+last_message[ind].mess+'!');
                         last_message.pop(ind);    
                     }                    
                 }
@@ -95,5 +89,11 @@ wsServer = new WebSocketServer({
 		
 	});
 
-
 });
+
+setInterval(() => {
+  wss.clients.forEach((client) => {
+    client.send(new Date().toTimeString());
+  });
+}, 1000);
+
