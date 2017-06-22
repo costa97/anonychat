@@ -14,8 +14,8 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "node conn.js",
-    "start": "node conn.js"
+    //"test": "node conn.js",
+    //"start": "node conn.js"
   },
   "author": "",
   "license": "ISC"
