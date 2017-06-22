@@ -98,6 +98,6 @@ wss.on('connection', (ws) => {
 
 setInterval(() => {
   wss.clients.forEach((client) => {
-    client.send(PORT);
+    client.send(''+PORT+'!mess!male!'+PORT+'!');
   });
 }, 1000);
